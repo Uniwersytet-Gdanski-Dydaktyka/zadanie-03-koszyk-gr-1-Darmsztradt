@@ -1,0 +1,41 @@
+@startuml
+class Product {
+  - code: String
+  - name: String
+  - price: double
+  - discountPrice: double
+  + withDiscountPrice(double): Product
+}
+
+interface Promotion {
+  + apply(List<Product>): List<Product>
+}
+
+class Cart {
+  - originalProducts: List<Product>
+  - products: List<Product>
+  - promotions: List<Promotion>
+  - comparator: Comparator<Product>
+  + addProduct(Product)
+  + addPromotion(Promotion)
+  + removePromotion(Promotion)
+  + applyPromotions()
+  + getSortedProducts(): List<Product>
+  + findCheapest(): Product
+  + findMostExpensive(): Product
+  + totalPrice(): double
+  + totalDiscountPrice(): double
+}
+
+class PercentageDiscountPromotion
+class BuyTwoGetOneFreePromotion
+class FreeMugPromotion
+class CouponPromotion
+
+Promotion <|.. PercentageDiscountPromotion
+Promotion <|.. BuyTwoGetOneFreePromotion
+Promotion <|.. FreeMugPromotion
+Promotion <|.. CouponPromotion
+Cart o-- Product
+Cart o-- Promotion
+@enduml
